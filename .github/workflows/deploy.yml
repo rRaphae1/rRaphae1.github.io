@@ -22,11 +22,13 @@ jobs:
           npm run clean
           npm run build
         # 如果你的 package.json 里没有 clean 和 build 脚本，请替换为 hexo clean 和 hexo generate
+      - name: Disable Jekyll
+        run: touch public/.nojekyll
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.RRAPHAE1_BLOG_PAGE_PERSONAL_TOKEN }}
           publish_dir: ./public
-          publish_branch: page  # 静态文件存放的分支，确保它和你 GitHub Pages 设置的分支一致
+          publish_branch: main  # 对于 username.github.io 仓库，必须使用 main 分支
           full_commit_message: ${{ github.event.head_commit.message }}
-          # external_repository: your-username/your-repo-name  # 替换为你的 GitHub 用户名/仓库名
+          external_repository: rRaphae1/rRaphae1.github.io  # 部署目标仓库
